@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "775115925226",
+    "project_id": "xtracare-aka",
+    "storage_bucket": "xtracare-aka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775115925226:android:86981f4cafb3e7511ed993",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775115925226-c95qqpjdao6fn0dna2anjniq8kc9onh9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf3q9R-dII5io0-7x4HH5jBef5ZCBqbpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775115925226-c95qqpjdao6fn0dna2anjniq8kc9onh9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
