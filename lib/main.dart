@@ -16,6 +16,7 @@ Future<void> main() async {
       home: AnimatedSplashScreen(
         splash: Image.asset("imag/logo.png"),
         splashIconSize: 200,
+        duration: 50,
         nextScreen: home(),
         splashTransition: SplashTransition.sizeTransition,
       ),

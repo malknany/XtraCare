@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, file_names, use_key_in_widget_constructors, prefer_const_constructors, annotate_overrides, avoid_unnecessary_containers, deprecated_member_use, sized_box_for_whitespace, unused_import, avoid_print, unnecessary_null_comparison
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,15 +18,65 @@ class rigister extends StatefulWidget {
 
 class rigisterpage extends State<rigister> {
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
-  Future signUp() async {
-    try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: myemail.text, password: mypassword.text);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+
+  // Future signUp() async {
+  //   try {
+  //     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //         email: myemail.text, password: mypassword.text);
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'user-not-found') {
+  //       print('No user found for that email.');
+  //     } else if (e.code == 'wrong-password') {
+  //       print('Wrong password provided for that user.');
+  //     }
+  //   }
+  // }
+
+  signUp() async {
+    var formdata = formstate.currentState;
+    if (formdata!.validate()) {
+      formdata.save();
+      try {
+       // showLoading(context);
+        UserCredential? userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: myemail.text, password: mypassword.text);
+        return userCredential;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          Navigator.of(context).pop();
+          AwesomeDialog(
+              context: context,
+              title: "Error",
+              dialogType: DialogType.ERROR,
+              body: const Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(
+                      "كلمة المرور ضعيفة يجب ان تتكون علي الاقل من ستة ارقام او حروف")))
+              .show();  } else if (e.code == 'email-already-in-use') {
+          Navigator.of(context).pop();
+          AwesomeDialog(
+              context: context,
+              title: "Error",
+              dialogType: DialogType.ERROR,
+              body: const Text(
+                  "البريد الالكتروني موجود بالفعل ، الرجاء ادخال بريد اخر"))
+              .show();}
+        else  if (e.code == 'user-not-found') {
+
+          Navigator.of(context).pop();
+          AwesomeDialog(
+              context: context,
+              title: "Error",
+              dialogType: DialogType.ERROR,
+              body: const Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(
+                      "No user found for that email.")))
+              .show();
+
+               }
+      } catch (e) {
+        print(e);
       }
     }
   }
