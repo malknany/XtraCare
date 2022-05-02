@@ -35,6 +35,7 @@ class _bottunState extends State<bottun> {
                     widget.img,
                     height: 150,
                     width: 145,
+                    //todo : prefer using size with media query to avoid the overflow
                   ),
                   Text(
                     widget.text1,
