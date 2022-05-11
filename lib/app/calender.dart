@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, avoid_print
+// ignore_for_file: camel_case_types, prefer_const_constructors, avoid_print, unnecessary_import, prefer_final_fields, avoid_unnecessary_containers, unnecessary_this, annotate_overrides
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

@@ -29,9 +29,9 @@ class _homepageState extends State<homepageh> {
           showUnselectedLabels: false,
           selectedItemColor: Color.fromARGB(255, 84, 201, 84),
           unselectedItemColor: Colors.black,
-          type: BottomNavigationBarType.shifting,
+          type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex =  index),
+          onTap: (index) => setState(() => currentIndex = index),
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month),

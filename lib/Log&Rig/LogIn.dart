@@ -1,7 +1,8 @@
-// ignore_for_file: camel_case_types, unused_import, use_key_in_widget_constructors, annotate_overrides, prefer_const_constructors, sized_box_for_whitespace, unnecessary_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, file_names
+// ignore_for_file: camel_case_types, unused_import, use_key_in_widget_constructors, annotate_overrides, prefer_const_constructors, sized_box_for_whitespace, unnecessary_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, file_names, unnecessary_new, avoid_print, await_only_futures
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Log&Rig/Rigister.dart';
@@ -22,9 +23,20 @@ class homepage extends State<home> {
   final TextEditingController passwordController = new TextEditingController();
   // firebase
   final _auth = FirebaseAuth.instance;
-
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   String? errorMessage;
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
+
+  Future<UserCredential> singinwithgoogle() async {
+    final GoogleSignInAccount? googleuser = await GoogleSignIn().signIn();
+
+    final GoogleSignInAuthentication googleauth =
+        await googleuser!.authentication;
+
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleauth.idToken, accessToken: googleauth.accessToken);
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 
   void signIn(String email, String password) async {
     if (formstate.currentState!.validate()) {
@@ -154,12 +166,12 @@ class homepage extends State<home> {
                   CheckboxListTile(
                     value: box1,
                     onChanged: checkbox1,
-                    contentPadding: EdgeInsets.all(10),
+                    contentPadding: EdgeInsets.only(left: 45),
                     title: Text("Remember Me"),
                     checkColor: Colors.black,
                     activeColor: Colors.amber.shade900,
                     controlAffinity: ListTileControlAffinity.leading,
-                    secondary: InkWell(
+                    /*secondary: InkWell(
                       child: Text("Forgit Password ?"),
                       onTap: () {
                         Navigator.push(
@@ -167,7 +179,7 @@ class homepage extends State<home> {
                             MaterialPageRoute(
                                 builder: ((context) => rigister())));
                       },
-                    ),
+                    ),*/
                   ),
                   SizedBox(
                     width: 325,
@@ -175,11 +187,11 @@ class homepage extends State<home> {
                     // ignore: deprecated_member_use
                     child: RaisedButton(
                       onPressed: () {
-                        //signIn(emailController.text, passwordController.text);
-                        Navigator.pushReplacement(
+                        signIn(emailController.text, passwordController.text);
+                        /*Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => homepageh()));
+                                builder: (context) => homepageh()));*/
                       },
                       child: Text(
                         "LOG IN",
@@ -198,7 +210,7 @@ class homepage extends State<home> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     //crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SizedBox(
+                      /*SizedBox(
                           child: Container(
                         width: 175,
                         height: 50,
@@ -224,7 +236,7 @@ class homepage extends State<home> {
                             ),
                           ),
                         ),
-                      )),
+                      )),*/
                       SizedBox(
                         child: Container(
                           width: 150,
@@ -236,7 +248,9 @@ class homepage extends State<home> {
                               color: Colors.red,
                               size: 35,
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              UserCredential cared = await singinwithgoogle();
+                            },
                             label: Text(
                               "GOOGLE",
                               style: TextStyle(

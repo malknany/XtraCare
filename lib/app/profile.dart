@@ -1,7 +1,9 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace
+// ignore_for_file: camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+//import 'package:firebase_storage/firebase_storage.dart';
 class profilepage extends StatefulWidget {
   const profilepage({Key? key}) : super(key: key);
 
@@ -10,7 +12,50 @@ class profilepage extends StatefulWidget {
 }
 
 class _profilepageState extends State<profilepage> {
-  int currentIndex = 0;
+  final namecon = TextEditingController();
+  final emailcon = TextEditingController();
+  final phonecon = TextEditingController();
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  getData() async {
+    /*await db.collection("users").get().then((event) {
+      for (var doc in event.docs) {
+        print("${doc.id} => ${doc.data()}");
+      }
+    });*/
+    /*DocumentReference doc = FirebaseFirestore.instance
+        .collection("Patient")
+        .doc("mHgvgvIiGSpGkZZ0400F");
+    await doc.get().then((value) {
+      print(value.exists);
+    });*/
+
+    /*CollectionReference userf =
+        FirebaseFirestore.instance.collection("Patient");
+    await userf.where("age", isGreaterThan: 19).get().then((value) {
+      value.docs.forEach((element) {
+        print(element.data());
+        print("===============================");
+      });
+    });*/
+
+    /*CollectionReference usersf =
+        FirebaseFirestore.instance.collection("Patient");
+    await usersf.get().then((value) => {
+          value.docs.forEach((element) {
+            print(element.data());
+            print(
+                "=================================================================");
+          })
+        });*/
+  }
+
+  @override
+  void initState() {
+    print("=========================================");
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +107,6 @@ class _profilepageState extends State<profilepage> {
               SizedBox(
                 width: 325,
                 child: Container(
-                  //alignment: Alignment.center,
-
                   child: TextFormField(
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
@@ -76,7 +119,6 @@ class _profilepageState extends State<profilepage> {
               SizedBox(
                 width: 325,
                 child: Container(
-                  //alignment: Alignment.center,
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
@@ -125,6 +167,16 @@ class _profilepageState extends State<profilepage> {
                   ),
                 ),
               ),
+              FlatButton(
+                  onPressed: () async {
+                    DocumentSnapshot data = await FirebaseFirestore.instance
+                        .collection("Patient")
+                        .doc("mHgvgvIiGSpGkZZ0400F")
+                        .get();
+                    print("======================================");
+                    print(data.data());
+                  },
+                  child: Text("get data"))
             ],
           ),
         )),
